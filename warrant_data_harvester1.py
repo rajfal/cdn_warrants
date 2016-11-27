@@ -15,6 +15,9 @@ import os
 import datetime
 import re
 
+class Warrant:
+    pass
+
 #url = "http://www.financialpost.com/markets/data/group-warrants.html";
 url = "file:///home/ithilien/learning.python/Warrants/warrants_nov.html";
 
