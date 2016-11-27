@@ -7,7 +7,7 @@ import os
 import datetime
 
 
-url = "http://web.tmxmoney.com/quote.php?qm_symbol=";
+url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
 #url = "file:///home/ithilien/learning.python/warrants_NDM.WT.A.html";
 
 
@@ -17,16 +17,16 @@ def open_page(url):
     return soup
 
 
-def extract_table_data():
+def get_daily_tmx_data(warrant_symbol):
     
-    warrant="JDL.WT"
-    my_soup = open_page(url + warrant)
+    #warrant_symbol = "JDL.WT"
+    my_soup = open_page(url_tmx + warrant_symbol)
     table = my_soup.find(class_="quote-price priceLarge")
     #skip first two table header rows and the very last, else None object appears
     for row in table.find_all('span'):
         print(row.string)
 
-    print("-------------------------------------table data is out now");
+    print("-------------------------------------tmx price updated");
 
 
 
@@ -51,7 +51,7 @@ def main():
      
     #data_table = soup()
     #print(data_table);
-    extract_table_data()
+    get_daily_tmx_data()
 
 
 

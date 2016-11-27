@@ -6,35 +6,37 @@ import sys
 import os
 import datetime
 
-url = "http://www.financialpost.com/markets/data/group-warrants.html";
-#url = "file:///home/ithilien/learning.python/warrants_nov.html";
+#url = "http://www.financialpost.com/markets/data/group-warrants.html";
+url = "file:///home/ithilien/learning.python/warrants_nov.html";
 
+url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
+
+
+
+##https://www.crummy.com/software/BeautifulSoup/bs4/doc
+##http://chrisalbon.com/python/beautiful_soup_scrape_table.html
 
 def open_page(url):
     page = urllib2.urlopen(url)
-    soup = BeautifulSoup(page, 'html.parser')
+    #soup = BeautifulSoup(page, 'html.parser')
+    soup = BeautifulSoup(page, 'lxml')
+
     return soup
 
-def df_sample():
-    """test for a DataFrame
-    """
+
+def get_daily_tmx_data(warrant_symbol):
     
-    #print("I am in main");
+    #warrant_symbol = "JDL.WT"
+    print ("...fetching closing price for " + warrant_symbol)
+    my_soup = open_page(url_tmx + warrant_symbol)
+    table = my_soup.find(class_="quote-price priceLarge")
+    #skip first two table header rows and the very last, else None object appears
+    for row in table.find_all('span'):
+        
+        return(row.string)
 
-    raw_data = {'first_name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy'],
-        'last_name': ['Miller', 'Jacobson', 'Ali', 'Milner', 'Cooze'],
-        'age': [42, 52, 36, 24, 73],
-        'preTestScore': [4, 24, 31, 2, 3],
-        'postTestScore': [25, 94, 57, 62, 70]}
+    #print("-------------------------------------tmx price updated");
 
-    #print(raw_data);
-
-    # Create a dataframe
-    raw_df = pd.DataFrame(raw_data, columns = ['first_name', 'last_name', 'age', 'preTestScore', 'postTestScore'])
-
-    # View a dataframe
-    #raw_df
-    return(raw_df.head(5));
 
 
 def extract_table_data():
@@ -64,11 +66,15 @@ def extract_table_data():
             # Create a variable of the string inside 1st <td> tag pair,
             #x = col[0].string # company
             company.append(col[0].string)
-            stock_close.append(col[1].string) # stock close
-            warrant_symbol.append(col[3].string) # symbol
+            stock_close.append(col[1].string or 0) # stock close
+            warrant_symbol.append(col[3].string) # symbol            
             warrant_exercise_price.append(col[5].string) # exercise price
-            warrant_close.append(col[6].string) # recent close
-            leverage.append(col[10].string) # leverage
+            ##warrant_end_of_day_close = get_daily_tmx_data(col[3].string) 
+            warrant_end_of_day_close = col[6].string # recent close                                               
+            warrant_close.append(warrant_end_of_day_close) # recent close 
+            stock_warrant_leverage = float(stock_close[-1])/float(warrant_close[-1])
+            leverage.append(stock_warrant_leverage) # leverage
+            ##leverage.append(col[10].string) # leverage
             years_left.append(col[11].string) # years left
             #x = col[12].string.strip().split(', ')[1] # expiry date - reports only the year part of the column, for filtering
             warrant_expiry_date.append(col[12].string) # expiry date
