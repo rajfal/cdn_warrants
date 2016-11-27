@@ -1,2 +1,2 @@
 # cdn_warrants
-canadian warrants data harvesting
+canadian warrants data harvesting for fun
