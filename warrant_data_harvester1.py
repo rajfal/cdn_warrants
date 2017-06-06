@@ -16,11 +16,11 @@ import datetime
 import re
 
 #url = "http://www.financialpost.com/markets/data/group-warrants.html";
-url = "file:///home/ithilien/learning.python/Warrants/warrants_nov.html";
+url = "file:///home/xyz/learning.python/Warrants/warrants_nov.html";
 
 url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
 url_tmx_combo_xt = "http://web.tmxmoney.com/getquote.php?symbols%5B%5D=NDM.WT.B&symbols%5B%5D=LYD.WT&symbols%5B%5D=MQR.WT.A"
-url_tmx_combo= "file:///home/ithilien/learning.python/Warrants/warrants_multi_quotes.html"
+url_tmx_combo= "file:///home/xyz/learning.python/Warrants/warrants_multi_quotes.html"
 
 def get_daily_tmx_data(warrant_symbol):
     #warrant_symbol = "JDL.WT"
