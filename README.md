@@ -1,2 +1,4 @@
 # cdn_warrants
-canadian warrants data harvesting for fun
+Canadian warrants data harvesting
+to implement home-made algorithm, ~decision tree, that is used for investment decision
+port Excel function into Python
