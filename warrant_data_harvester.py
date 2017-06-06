@@ -7,7 +7,7 @@ import os
 import datetime
 
 #url = "http://www.financialpost.com/markets/data/group-warrants.html";
-url = "file:///home/ithilien/learning.python/warrants_nov.html";
+url = "file:///home/xyz/learning.python/warrants_nov.html";
 
 url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
 
