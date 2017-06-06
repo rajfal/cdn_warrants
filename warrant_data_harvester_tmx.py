@@ -8,7 +8,7 @@ import datetime
 
 
 url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
-#url = "file:///home/ithilien/learning.python/warrants_NDM.WT.A.html";
+#url = "file:///home/xyz/learning.python/warrants_NDM.WT.A.html";
 
 
 def open_page(url):
