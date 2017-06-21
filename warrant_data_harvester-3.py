@@ -1,26 +1,33 @@
 #!/usr/bin/env python
+#----------------START IMPORT LIBRARIES -------------------------------#
 from bs4 import BeautifulSoup
+
 import pandas as pd
 
-import urllib2
-import csv
+import requests # to open files on remote servers
+
+import csv #not used yet
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-#markhneedham.com/blog/2015/05/21/
-#to fix : UnicodeEncodeError: 'ascii' codec can't encode character u'\xa0' in position 5: ordinal not in range(128)
 
 import os
+
 import datetime
+
 import re
 
-#url = "http://www.financialpost.com/markets/data/group-warrants.html";
-url = "file:///home/xyz/learning.python/Warrants/warrants_nov.html";
+#------------------END IMPORT LIBRARIES -------------------------------#
+
+#------------------START CONSTANTS ------------------------------------#
+
+url_remote = "http://www.financialpost.com/markets/data/group-warrants.html";
+url_local = "/home/ithilien/Documents/misc/Warrants-Data-2017-06.html";
 
 url_tmx = "http://web.tmxmoney.com/quote.php?qm_symbol=";
 url_tmx_combo_xt = "http://web.tmxmoney.com/getquote.php?symbols%5B%5D=NDM.WT.B&symbols%5B%5D=LYD.WT&symbols%5B%5D=MQR.WT.A"
 url_tmx_combo= "file:///home/xyz/learning.python/Warrants/warrants_multi_quotes.html"
+
+#--------------------END CONSTANTS ------------------------------------#
 
 def get_daily_tmx_data(warrant_symbol):
     #warrant_symbol = "JDL.WT"
@@ -76,16 +83,23 @@ def make_multi_arg_url(warrant_symbols= ""):
 ##http://chrisalbon.com/python/beautiful_soup_scrape_table.html 
 ##pandas.pydata.org documentation
 
-def open_page(url):
-    #page = urllib2.urlopen(url)
-    return urllib2.urlopen(url)
 
+def get_local_page_content(path):
+    #for files stored locally
+    with open(path, "r") as f:
+        page = f.read()
+    return page
+
+def get_page_content(url):
+    response = requests.get(url)
+    return response.content
+        
 def get_soup_table_(page= '', tag= '', parser= 'lxml'):
     soup = BeautifulSoup(page, parser)
     table = soup.find(tag)
     return table
  
-def get_soup_table(page= '', page_class= '', parser= 'lxml'):
+def get_soup_table(page= '', page_class= '', parser= 'html.parser'):
     soup = BeautifulSoup(page, parser)
     table = soup.find(class_= page_class)
     return table
@@ -117,14 +131,16 @@ def extract_monthly_data(table= ''):
             col[0].string.replace_with(previous_co_name)
 
         #only warrants with at least 4 years to expiry need to be included
+        # =>>
         if int((col[12].string.strip().split(', ')[1]))> (datetime.datetime.now().year +0):
+            
             # Create a variable of the string inside 1st <td> tag pair,
             company.append(col[0].string) # company name
             stock_close.append(col[1].string or 0) # stock close
             warrant_symbol.append(col[3].string) # symbol            
             warrant_exercise_price.append(col[5].string) # exercise price
             
-            print col[6].get_text()
+            #print col[6].get_text()
             try:
                 col[6].sup.decompose()
             except AttributeError:
@@ -150,10 +166,18 @@ def extract_monthly_data(table= ''):
             
             #stock_warrant_leverage = col[10].string # leverage
             #print(col[10].string)
-            leverage.append(stock_warrant_leverage) 
+            
+            leverage.append('{:.1f}'.format(stock_warrant_leverage)) 
             #leverage.append(col[10].string) # leverage
 
             years_left.append(col[11].string) # years left
+            
+            if float(col[11].string)>3.5 and stock_warrant_leverage>4.0: 
+                print(col[3].string + ' - ' + col[0].string)
+                print('to expiry ' + col[11].string + ' years')
+                # print('leverage ' + str(stock_warrant_leverage)) # "%8.2f" %
+                print('leverage ' + '{:.1f}'.format(stock_warrant_leverage))
+                
             #x = col[12].string.strip().split(', ')[1] # expiry date - reports only the year part of the column, for filtering
             warrant_expiry_date.append(col[12].string) # expiry date
             #print(col[12].string)
@@ -185,11 +209,18 @@ def mainx():
 def main():
     """Main entry point for script
     """
+    datasource = "local"
+    
     #pass
     os.system('clear') #play on a clean screen :)    
     
-    page = open_page(url) 
+    if datasource = "local"
+        page = get_local_page_content(url_local)
+    else
+        page = get_page_content(url)
+    
     table = get_soup_table(page,"data")
+
     data_as_columns = extract_monthly_data(table)
 
     pd.set_option('display.width', pd.util.terminal.get_terminal_size()[0])
@@ -198,6 +229,8 @@ def main():
     #indexed_df = df.set_index(['1-company']) # add index
 
     print(df)
+    print("Data from: " + datasource )
+    
     #-----
     #print(df[['1-company', '3-symbol']]); #show two cols only
 
