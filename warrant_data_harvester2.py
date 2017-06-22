@@ -29,6 +29,11 @@ url_tmx_combo= "file:///home/xyz/learning.python/Warrants/warrants_multi_quotes.
 
 #--------------------END CONSTANTS ------------------------------------#
 
+#-----------START GLOBAL VARIABLES ------------------------------------#
+current_file_date = ''
+#-------------END GLOBAL VARIABLES ------------------------------------#
+
+
 def get_daily_tmx_data(warrant_symbol):
     #warrant_symbol = "JDL.WT"
     print ("...fetching closing price for " + warrant_symbol)
@@ -136,12 +141,15 @@ def extract_monthly_data(table= ''):
     currency = []
     
     prices = [] # hold cols that may contain US$ 
-    """ 
-    for header in table.find_all('tr')[0]:
+     
+    for header in table.find_all('tr')[0:1]:
         # save name for eventual CSV file name
-        header_str = header.string.split('>')
-        print(header)
-    """    
+        col = header.find_all('td')
+        global current_file_date 
+        # assign to global variable
+        current_file_date = get_num_value(col[0])
+        print(current_file_date)    
+        
         
     # for warrants data body, exclude first two table header rows and the very last, else None object appears
     for row in table.find_all('tr')[2:-1]:
@@ -249,17 +257,18 @@ def main():
 
     #indexed_df = df.set_index(['1-company']) # add index
 
-    print(df)
-    ##print(df.to_csv('temp_warrant.csv'))
+    ##print(df)
+    ##print(df.to_csv('warrants_data_' + str(get_num_value(col[5])) + '.csv'))
     
+    global current_file_date
+    print('file date : ' + current_file_date)
+    df.to_csv('warrants_market_data_' + str(current_file_date) + '.csv', index=False)
     
     print('{:*^30}'.format(' end '))
     print("Data from: " + datasource )
     print('{:*^30}'.format(' end '))
     # https://docs.python.org/2/library/string.html
     
-    
-    #print(df.reset_index().to_json(orient='index'))
     
     
     
