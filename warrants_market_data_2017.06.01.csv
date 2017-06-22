@@ -1,0 +1,64 @@
+1-company,2-stk_close,3-symbol,4-exercise_price,5-wrt_close,6-leverage,7-years_left,8-expiry_date,9-currency
+Acasta Enterprises Inc,8.750,AEF.WT,11.500,1.200,7.3,4.6,"Jan. 3, 2022",CDN
+Alamos Gold Inc,9.090,AGI.WT,28.470,0.175,51.9,1.2,"Aug. 30, 2018",CDN
+Alamos Gold Inc,9.090,AGI.WT.A,10.000,2.260,4.0,1.6,"Jan. 7, 2019",CDN
+Alio Gold Inc,6.240,ALO.WT,7.000,1.950,3.2,1.0,"May 30, 2018",CDN
+Ascendant Resources Inc,0.720,ASND.WT,1.250,0.200,3.6,4.8,"Mar. 7, 2022",CDN
+Atlantic Gold Corp,1.450,AGB.WT,0.600,0.900,1.6,1.2,"Aug. 20, 2018",CDN
+Avino Slvr & Gold Mns Ltd,2.000,ASM.WT,2.000,0.370,5.4,2.5,"Nov. 28, 2019",USD
+Blackbird Energy Inc,0.430,BBI.WT,0.300,0.220,2.0,4.0,"May 19, 2021",CDN
+Canada JetLines Ltd,0.200,JET.WT,0.375,0.080,2.5,2.3,"Sep. 16, 2019",CDN
+Canada JetLines Ltd,0.200,JET.WT.A,0.500,0.045,4.4,1.7,"Feb. 28, 2019",CDN
+Copperbank Resources Corp,0.120,CBK.WT,0.500,0.010,12.0,2.4,"Oct. 21, 2019",CDN
+Cornerstone Cap Res Inc,0.510,CGP.WT.S,0.350,0.160,3.2,1.8,"Apr. 7, 2019",CDN
+Delphi Energy Corp,1.240,DEE.WT,1.400,0.450,2.8,4.1,"July 15, 2021",CDN
+Dundee Corp,3.080,DC.WT,6.000,0.790,3.9,2.1,"June 30, 2019",CDN
+Emblem Corp,2.100,EMC.WT,1.750,0.730,2.9,2.5,"Dec. 6, 2019",CDN
+Energy Fuels Inc,2.110,EFR.WT,2.450,0.870,2.4,4.3,"Sep. 20, 2021",USD
+European Metals Corp,0.005,ECU.WT,0,0.010,0.5,1.7,"Feb. 20, 2019",CDN
+Excellon Resources Inc,1.510,EXN.WT,1.750,0.400,3.8,1.1,"July 26, 2018",CDN
+Firm Cap Amern Rlty Ptnrs,6.450,FCA.WT.U,8.500,0.450,14.3,3.0,"May 29, 2020",USD
+Glance Technologies Inc,0.175,GET.WT,0.250,0.025,7.0,1.9,"Apr. 27, 2019",CDN
+GoGold Resources Inc,0.690,GGD.WT,1.700,0.035,19.7,1.0,"June 7, 2018",CDN
+Golden Queen Mng Co Ltd,0.790,GQM.WT,2.000,0.140,5.6,2.1,"July 25, 2019",CDN
+GoldMining Inc,1.750,GOLD.WT,0.750,0.960,1.8,1.6,"Dec. 31, 2018",CDN
+Gran Colombia Gold Corp,1.430,GCM.WT.A,48.750,0.225,6.4,1.8,"Mar. 18, 2019",CDN
+GreenSpace Brands Inc,1.600,JTR.WT,1.200,0.550,2.9,1.7,"Feb. 25, 2019",CDN
+Helius Med Tchnlgys Inc,1.900,HSM.WT,1.500,1.100,1.7,1.9,"Apr. 18, 2019",CDN
+Hudbay Minerals Inc,6.910,HBM.WT,15.000,0.300,23.0,1.1,"July 20, 2018",CDN
+Jackpot Digital Inc,0.020,JP.WT,0,0.005,4.0,4.6,"Jan. 20, 2022",CDN
+Kew Media Group Inc,9.850,KEW.WT,11.500,1.670,5.9,6.0,"June 13, 2023",CDN
+Kingsway Finl Svcs Inc,8.350,KFS.WT.V,5.000,2.490,3.4,6.3,"Sep. 15, 2023",USD
+Kootenay Silver Inc,0.290,KTN.WT,0.550,0.200,1.4,3.9,"Apr. 21, 2021",CDN
+Liberty Gold Corp,0.460,LGD.WT,0.900,0.085,5.4,2.0,"May 16, 2019",CDN
+MGX Minerals Inc,1.140,XMG.WT,0.200,0.910,1.3,1.3,"Sep. 21, 2018",CDN
+Manitok Energy Inc,0.115,MEI.WT,0.180,0.025,4.6,4.5,"Nov. 15, 2021",CDN
+Monarques Gold Corp,0.345,MQR.WT.A,0.180,0.180,1.9,0.6,"Jan. 23, 2018",CDN
+NYX Gaming Group Ltd,1.080,NYX.WT,5.000,0.090,12.0,1.1,"July 16, 2018",CDN
+Nemaska Lithium Inc,1.220,NMX.WT,1.500,0.350,3.5,2.1,"July 8, 2019",CDN
+Nthn Dynasty Minerals Ltd,2.120,NDM.WT.A,0.550,1.570,1.4,3.1,"July 9, 2020",CDN
+Nthn Dynasty Minerals Ltd,2.120,NDM.WT.B,0.650,1.490,1.4,4.0,"June 10, 2021",CDN
+Osisko Gold Royalties Ltd,14.260,OR.WT,36.500,2.400,5.9,4.7,"Feb. 18, 2022",CDN
+Osisko Gold Royalties Ltd,14.260,OR.WT.A,10.080,1.810,7.9,1.7,"Feb. 26, 2019",CDN
+Osisko Mining Inc,4.800,OSK.WT,3.000,1.900,2.5,1.2,"Aug. 25, 2018",CDN
+Prairie Provident Res Inc,0.570,PPR.WT,0.870,0.075,7.6,1.8,"Mar. 16, 2019",CDN
+Primero Mining Corp,0.500,P.WT.C,3.350,0.030,16.7,1.1,"June 24, 2018",CDN
+Rainy Mountain Rty Corp,0.160,RMO.WT,0.150,0.060,2.7,0.7,"Mar. 1, 2018",CDN
+Renaissance Oil Corp,0.235,ROE.WT,0.500,0.075,3.1,2.2,"July 31, 2019",CDN
+Renaissance Oil Corp,0.235,ROE.WT.A,0.200,0.060,3.9,3.3,"Oct. 6, 2020",CDN
+Royalty North Ptnrs Ltd,0.150,RNP.WT,0.250,0.055,2.7,4.3,"Sep. 1, 2021",CDN
+Sandstorm Gold Ltd,4.580,SSL.WT,4.000,2.760,1.7,3.4,"Nov. 3, 2020",USD
+SilverCrest Metals Inc,1.930,SIL.WT,3.000,0.370,5.2,3.5,"Dec. 6, 2020",CDN
+Sprott Resource Hldgs Inc,0.165,SRHI.WT,0.333,0.070,2.4,4.7,"Feb. 9, 2022",CDN
+TAG Oil Ltd,0.700,TAO.WT,0.900,0.095,7.4,1.8,"Mar. 20, 2019",CDN
+theScore Inc,0.160,SCR.WT,1.000,0.005,32.0,0.8,"Mar. 5, 2018",CDN
+Titan Medical Inc,0.353,TMD.WT.C,1.250,0.040,8.8,0.8,"Mar. 25, 2018",CDN
+Titan Medical Inc,0.353,TMD.WT.F,1.600,0.020,17.6,3.5,"Nov. 16, 2020",CDN
+Titan Medical Inc,0.353,TMD.WT.G,1.000,0.030,11.8,3.7,"Feb. 12, 2021",CDN
+Titan Medical Inc,0.353,TMD.WT.H,1.200,0.035,10.1,3.8,"Mar. 31, 2021",CDN
+Titan Medical Inc,0.353,TMD.WT.I,0.750,0.060,5.9,4.3,"Sep. 20, 2021",CDN
+Trek Mining Inc,1.130,TREK.WT,3.000,0.340,3.3,4.3,"Oct. 6, 2021",CDN
+Trilogy Intl Partners Inc,9.500,TRL.WT,11.500,0.500,19.0,4.7,"Feb. 7, 2022",CDN
+UGE International Ltd,0.670,UGE.WT,0.480,0.225,3.0,1.1,"June 24, 2018",CDN
+West Kirkland Mining Inc,0.080,WKM.WT,0.300,0.015,5.3,1.9,"Apr. 17, 2019",CDN
+Yellow Media Inc,0.060,Y.WT,28.160,0.690,0.1,5.6,"Dec. 20, 2022",CDN
