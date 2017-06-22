@@ -90,9 +90,17 @@ def get_local_page_content(path):
         page = f.read()
     return page
 
-def get_page_content(url):
+def get_remote_page_content(url):
+    # on http://... server
     response = requests.get(url)
     return response.content
+    
+def get_page(source):
+    if source == 'local':
+        page = get_local_page_content(url_local)
+    else:
+        page = get_page_content(url_remote)
+    return page    
         
 def get_soup_table_(page= '', tag= '', parser= 'lxml'):
     soup = BeautifulSoup(page, parser)
@@ -103,6 +111,16 @@ def get_soup_table(page= '', page_class= '', parser= 'html.parser'):
     soup = BeautifulSoup(page, parser)
     table = soup.find(class_= page_class)
     return table
+    
+def remove_html_tags(html_element, tag_list):
+    """
+        remove_html_tags(row, ['span', 'sup'])
+    """
+    for tag in html_element(tag_list):
+            try:
+                tag.decompose()                
+            except AttributeError:
+                pass    
 
 def extract_monthly_data(table= ''):
     """ return 
@@ -118,11 +136,20 @@ def extract_monthly_data(table= ''):
     currency = []
     
     prices = [] # hold cols that may contain US$ 
-
-    #exclude first two table header rows and the very last, else None object appears
+    """ 
+    for header in table.find_all('tr')[0]:
+        # save name for eventual CSV file name
+        header_str = header.string.split('>')
+        print(header)
+    """    
+        
+    # for warrants data body, exclude first two table header rows and the very last, else None object appears
     for row in table.find_all('tr')[2:-1]:
-                 
-        # Create a variable of all the <td> tag pairs in each <tr> tag pair,
+        
+        # clear superscript references
+        remove_html_tags(row, ['sup'])
+        
+        # create a variable of all the <td> tag pairs in each <tr> tag pair,
         col = row.find_all('td')
         
         #col[0] in some rows only 1 character and missing full co. name...fill it in with previous string
@@ -139,14 +166,10 @@ def extract_monthly_data(table= ''):
             
             stock_close.append(get_num_value(col[1]) or 0) # stock close 
             
-            warrant_symbol.append(col[3].string) # symbol            
+            warrant_symbol.append(col[3].string) # symbol
+                        
             warrant_exercise_price.append(get_num_value(col[5]) or 0) # exercise price
-            
-            try:
-                col[6].sup.decompose()
-            except AttributeError:
-                pass
-                
+                            
             warrant_close.append(get_num_value(col[6]) or 0)                                            
             
             stock_warrant_leverage = float(stock_close[-1])/float(warrant_close[-1])
@@ -154,9 +177,7 @@ def extract_monthly_data(table= ''):
             # return one decimal place
             leverage.append('{:.1f}'.format(stock_warrant_leverage)) 
             
-            yrs_left = re.sub('[^0-9^.]','', col[11].get_text(), flags=re.U)
-            
-            years_left.append(yrs_left) # years left
+            years_left.append(get_num_value(col[11])) # years left
             
             """
             if float(yrs_left)>3.5 and stock_warrant_leverage>40.0: 
@@ -169,7 +190,7 @@ def extract_monthly_data(table= ''):
             
             warrant_expiry_date.append(col[12].string) # expiry date
             
-            #check whether US$ is present
+            #check whether US$ is present in following columns
             prices = [ col[1].string, col[5].string, col[6].get_text() ]            
             currency.append(get_trade_currency('US$', prices))
          
@@ -180,7 +201,7 @@ def extract_monthly_data(table= ''):
                '9-currency': currency})
     #for c in columns.items():
     #   print(c)
- 
+    
     return columns
     
 def get_trade_currency( other_currency, price_list ):
@@ -214,12 +235,9 @@ def main():
     #pass
     os.system('clear') #play on a clean screen :)    
     
-    datasource = 'local' # 'remote'
-        
-    if datasource == 'local':
-        page = get_local_page_content(url_local)
-    else:
-        page = get_page_content(url_remote)
+    # 'local' by default, else 'remote' 
+    datasource = 'local'   
+    page = get_page(datasource)
     
     table = get_soup_table(page,"data")
 
@@ -231,8 +249,8 @@ def main():
 
     #indexed_df = df.set_index(['1-company']) # add index
 
-    ##print(df)
-    print(df.to_csv('temp_warrant.csv'))
+    print(df)
+    ##print(df.to_csv('temp_warrant.csv'))
     
     
     print('{:*^30}'.format(' end '))
