@@ -95,6 +95,17 @@ def get_num_value( in_str ):
     # col[6].get_text()
     return re.sub('[^0-9^.]','', in_str.get_text(), flags=re.U)                
 
+def get_pct_to_exercise_warrant(intrinsic_value, price_common):
+    """ 
+        calculate percentage a warrant needs to increase to be exercised
+        input: intrinsic value of warrant, closing price of common stock
+        usage: get_perc_to_exercise_warrant(x, y)
+    """
+    # if warrant's intrinsic value is 0 or less, then warrant can be exercised
+    f = (lambda x,y: float(x)/float(y) if float(x) > 0 else 0)
+    return f(intrinsic_value,price_common)
+
+
 def extract_monthly_data(table= ''):
     """ 
         => better descriptor for function collate...?
@@ -107,12 +118,15 @@ def extract_monthly_data(table= ''):
     warrant_exercise_price = []
     warrant_close = []
     
+    leverage = []
+    
     warrant_expiry_date = []
     years_2_expiry = []
     days_2_expiry = []
     
-    leverage = []
-    
+    w_intrinsic_value = []
+    w_percent_to_exercise = []
+    w_time_price_gain_factor = []
     
     currency = []
     
@@ -168,16 +182,14 @@ def extract_monthly_data(table= ''):
             years_2_expiry.append(get_num_value(col[11])) # 
             
             days_2_expiry.append(get_days_to_expiry(warrant_expiry_date[-1]))
+                                  
+            intrinsic_val = float(warrant_exercise_price[-1]) - float(stock_close[-1])           
+            w_intrinsic_value.append('{:.2f}'.format(intrinsic_val))
             
-            """
-            if float(yrs_left)>3.5 and stock_warrant_leverage>40.0: 
-            ##if float(col[11].string)>3.5 and stock_warrant_leverage>40.0:     
-                print(col[3].string + ' - ' + col[0].string)
-                print('to expiry ' + col[11].string + ' years')
-                # print('leverage ' + str(stock_warrant_leverage)) # "%8.2f" %
-                print('leverage ' + '{:.1f}'.format(stock_warrant_leverage))
-            """    
-            
+            pct_increase = get_pct_to_exercise_warrant(w_intrinsic_value[-1], stock_close[-1])
+            w_percent_to_exercise.append('{:.2f}'.format(pct_increase))
+           
+            #w_time_price_gain_factor = [] '{:.2f}'.format(
             
             
             #ccheck whether US$ is present in following columns
@@ -188,7 +200,7 @@ def extract_monthly_data(table= ''):
         
     columns = ({'01-company': company, '02-stk_close': stock_close, '03-symbol': warrant_symbol, '04-exercise_price': warrant_exercise_price,
                '05-wrt_close': warrant_close, '06-leverage': leverage, '07-yrs_to_expiry': years_2_expiry, '08-expiry_date': warrant_expiry_date, 
-               '09-currency': currency, '10-days_to_expiry': days_2_expiry})
+               '09-currency': currency, '10-days_to_expiry': days_2_expiry,'11-intrinsic_value': w_intrinsic_value, '12-%_to_go_to_exercise': w_percent_to_exercise})
     
     return columns
     

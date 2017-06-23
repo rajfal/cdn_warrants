@@ -1,7 +1,23 @@
+#!/usr/bin/env python
+#------------------CODE INFORMATION -----------------------------------#
+"""
+by: Rafal Jacyna
+email: rafal@jacyna.net
+
+purpose: functions to manipulate dates
+
+refs:
+#http://strftime.org/
+
+"""
+#------------------CODE INFORMATION -----------------------------------#
+
+#----------------START IMPORT LIBRARIES -------------------------------#
 from datetime import datetime
 import time
 
-#http://strftime.org/
+#------------------END IMPORT LIBRARIES -------------------------------#
+
 
 
 def untangle_date(date_mash):
@@ -10,7 +26,6 @@ def untangle_date(date_mash):
        into '02/01/2022', '07/03/2022'
        usage: date_cleaner(' Jan. 2, 2022 ')
     """
-    print(date_mash)
     # remove outer whitespace, commas, periods
     cleaner_date = ''.join( c for c in date_mash.strip() if  c not in ',.' )
     
