@@ -19,6 +19,8 @@ refs:
 
 
 #----------------START IMPORT LIBRARIES -------------------------------#
+from utils import untangle_date, get_days_to_expiry # custom package
+
 from bs4 import BeautifulSoup
 
 import pandas as pd
@@ -48,13 +50,13 @@ current_file_date = ''
 
 
 def get_local_page_content(path):
-    #for files stored locally
+    # for local files
     with open(path, "r") as f:
         page = f.read()
     return page
 
 def get_remote_page_content(url):
-    # on http://... server
+    # for files on http://... server
     response = requests.get(url)
     return response.content
     
@@ -62,7 +64,7 @@ def get_page(source):
     if source == 'local':
         page = get_local_page_content(url_local)
     else:
-        page = get_page_content(url_remote)
+        page = get_remote_page_content(url_remote)
     return page    
         
 def get_soup_table(page= '', page_class= '', parser= 'html.parser'):
@@ -81,7 +83,7 @@ def remove_html_tags(html_element, tag_list):
                 pass    
                 
 def get_trade_currency( other_currency, price_list ):
-    #check whether other_currency is present, default is CDN
+    # check if another_currency is present, default is CDN
     trade_currency = 'CDN'
     
     if any(other_currency in p for p in price_list):
@@ -95,16 +97,23 @@ def get_num_value( in_str ):
 
 def extract_monthly_data(table= ''):
     """ 
-        return columns for a data frame 
+        => better descriptor for function collate...?
+        return input and calculated columns for a DataFrame 
     """
     company = []
     stock_close = []
+    
     warrant_symbol = []
     warrant_exercise_price = []
     warrant_close = []
-    leverage = []
-    years_left = []
+    
     warrant_expiry_date = []
+    years_2_expiry = []
+    days_2_expiry = []
+    
+    leverage = []
+    
+    
     currency = []
     
     prices = [] # hold cols that may contain US$ 
@@ -128,16 +137,16 @@ def extract_monthly_data(table= ''):
         # create a variable of all the <td> tag pairs in each <tr> tag pair,
         col = row.find_all('td')
         
-        #col[0] in some rows only 1 character and missing full co. name...fill it in with previous string
+        # col[0] in some rows only 1 character and missing full co. name...fill it in with previous string
         if len(col[0].string) == 1: 
             col[0].string.replace_with(previous_co_name)
 
-        #only warrants with at least 4 years to expiry need to be included
+        # only warrants with at least 4 years to expiry need to be included
         # =>>
         if int((col[12].string.strip().split(', ')[1]))> (datetime.datetime.now().year +0):
             
             
-            # Create a variable of the string inside 1st <td> tag pair,
+            # create a variable of the string inside 1st <td> tag pair,
             company.append(col[0].string) # company name
             
             stock_close.append(get_num_value(col[1]) or 0) # stock close 
@@ -148,12 +157,17 @@ def extract_monthly_data(table= ''):
                             
             warrant_close.append(get_num_value(col[6]) or 0)                                            
             
-            stock_warrant_leverage = float(stock_close[-1])/float(warrant_close[-1])
+            # stock warrant leverage
+            sw_leverage = float(stock_close[-1])/float(warrant_close[-1])
             
             # return one decimal place
-            leverage.append('{:.1f}'.format(stock_warrant_leverage)) 
+            leverage.append('{:.1f}'.format(sw_leverage)) 
             
-            years_left.append(get_num_value(col[11])) # years left
+            warrant_expiry_date.append(untangle_date(col[12].string))
+            
+            years_2_expiry.append(get_num_value(col[11])) # 
+            
+            days_2_expiry.append(get_days_to_expiry(warrant_expiry_date[-1]))
             
             """
             if float(yrs_left)>3.5 and stock_warrant_leverage>40.0: 
@@ -164,17 +178,17 @@ def extract_monthly_data(table= ''):
                 print('leverage ' + '{:.1f}'.format(stock_warrant_leverage))
             """    
             
-            warrant_expiry_date.append(col[12].string) # expiry date
             
-            #check whether US$ is present in following columns
+            
+            #ccheck whether US$ is present in following columns
             prices = [ col[1].string, col[5].string, col[6].get_text() ]            
             currency.append(get_trade_currency('US$', prices))
          
         previous_co_name = col[0].string
         
-    columns = ({'1-company': company, '2-stk_close': stock_close, '3-symbol': warrant_symbol, '4-exercise_price': warrant_exercise_price,
-               '5-wrt_close': warrant_close, '6-leverage': leverage, '7-years_left': years_left, '8-expiry_date': warrant_expiry_date, 
-               '9-currency': currency})
+    columns = ({'01-company': company, '02-stk_close': stock_close, '03-symbol': warrant_symbol, '04-exercise_price': warrant_exercise_price,
+               '05-wrt_close': warrant_close, '06-leverage': leverage, '07-yrs_to_expiry': years_2_expiry, '08-expiry_date': warrant_expiry_date, 
+               '09-currency': currency, '10-days_to_expiry': days_2_expiry})
     
     return columns
     
