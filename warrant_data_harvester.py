@@ -101,10 +101,20 @@ def get_pct_to_exercise_warrant(intrinsic_value, price_common):
         input: intrinsic value of warrant, closing price of common stock
         usage: get_perc_to_exercise_warrant(x, y)
     """
-    # if warrant's intrinsic value is 0 or less, then warrant can be exercised
+    # if warrant's intrinsic value is 0 or less, then warrant can not be exercised
     f = (lambda x,y: float(x)/float(y) if float(x) > 0 else 0)
     return f(intrinsic_value,price_common)
 
+def get_price_time_gain_factor(percentage_to_exercise, days_to_expiry):
+    """ 
+        calculate percentage a warrant needs to increase to be exercised
+        input: % warrant's price needs to increase to exercise it,
+              number of day warrant has til expiry
+        usage: get_price_time_gain_factor(x, y)
+    """
+    # if warrant's % value is 0 or less, then warrant can no longer be exercised
+    f = (lambda x,y: float(x)*100/float(y) if float(x) > 0 else 0)
+    return f(percentage_to_exercise, days_to_expiry)
 
 def extract_monthly_data(table= ''):
     """ 
@@ -188,8 +198,10 @@ def extract_monthly_data(table= ''):
             
             pct_increase = get_pct_to_exercise_warrant(w_intrinsic_value[-1], stock_close[-1])
             w_percent_to_exercise.append('{:.2f}'.format(pct_increase))
-           
-            #w_time_price_gain_factor = [] '{:.2f}'.format(
+            
+            tp_gain = get_price_time_gain_factor(w_percent_to_exercise[-1], days_2_expiry[-1])       
+            w_time_price_gain_factor.append('{:.2f}'.format(tp_gain)) 
+            
             
             
             #ccheck whether US$ is present in following columns
@@ -200,7 +212,8 @@ def extract_monthly_data(table= ''):
         
     columns = ({'01-company': company, '02-stk_close': stock_close, '03-symbol': warrant_symbol, '04-exercise_price': warrant_exercise_price,
                '05-wrt_close': warrant_close, '06-leverage': leverage, '07-yrs_to_expiry': years_2_expiry, '08-expiry_date': warrant_expiry_date, 
-               '09-currency': currency, '10-days_to_expiry': days_2_expiry,'11-intrinsic_value': w_intrinsic_value, '12-%_to_go_to_exercise': w_percent_to_exercise})
+               '09-currency': currency, '10-days_to_expiry': days_2_expiry,'11-intrinsic_value': w_intrinsic_value, 
+               '12-%_til_exercise': w_percent_to_exercise, '13-price_time_gain_factor': w_time_price_gain_factor})
     
     return columns
     
