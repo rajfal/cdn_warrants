@@ -65,7 +65,9 @@ def gen_alerts():
         p = get_subsignal_warrantpricelevel(s[warrant][4])
         #print(p)
         
-        print(l*_p_Leverage + g*_p_TimePriceGain + p*_p_WarrantPriceLevel) 
+        alert = '{:.2f}'.format((l*_p_Leverage + g*_p_TimePriceGain + p*_p_WarrantPriceLevel)) 
+        
+        print(alert)
          
     return 1
     
