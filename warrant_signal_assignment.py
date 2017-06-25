@@ -4,7 +4,8 @@
 by: Rafal Jacyna
 email: rafal@jacyna.net
 
-purpose: to assign signals to select warrants
+purpose: to generate alert signals for warrants that show signs of 
+         profitability
 
 refs:
 
@@ -175,12 +176,6 @@ def main():
     
     gen_alerts()
     
-    """
-    print('file date : ' + current_file_date)
-    print('{:*^30}'.format(' end '))
-    print("Data from: " + datasource )
-    print('{:*^30}'.format(' end '))
-    """
         
 if __name__ == '__main__':
     """report any processing error to the shell??

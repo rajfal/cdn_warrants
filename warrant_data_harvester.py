@@ -46,6 +46,8 @@ url_local = "/home/ithilien/Documents/misc/Warrants-Data-2017-06.html";
 
 #-----------START GLOBAL VARIABLES ------------------------------------#
 current_file_date = ''
+no_warrants_processed = 0
+
 #-------------END GLOBAL VARIABLES ------------------------------------#
 
 
@@ -209,6 +211,9 @@ def extract_monthly_data(table= ''):
             currency.append(get_trade_currency('US$', prices))
          
         previous_co_name = col[0].string
+    
+    global no_warrants_processed
+    no_warrants_processed = len(company)
         
     columns = ({'01-company': company, '02-stk_close': stock_close, '03-symbol': warrant_symbol, '04-exercise_price': warrant_exercise_price,
                '05-wrt_close': warrant_close, '06-leverage': leverage, '07-yrs_to_expiry': years_2_expiry, '08-expiry_date': warrant_expiry_date, 
@@ -245,6 +250,15 @@ def main():
     # save to CSV file
     df.to_csv('warrants_market_data_' + str(current_file_date) + '.csv', index=False)
     
+    print("Data sourced from http://www.financialpost.com/markets/data/group-warrants.html \n" +
+          str(no_warrants_processed) + " warrants were prepared for further selection \n" +
+          "Output found in : " + "warrants_market_data_" + str(current_file_date) + ".csv \n\n" +
+          "Sample data: \n\n")
+          
+    print(df[:3])
+          
+          
+           
     """
     print('file date : ' + current_file_date)
     print('{:*^30}'.format(' end '))

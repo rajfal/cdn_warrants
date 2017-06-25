@@ -56,29 +56,29 @@ def gen_avealeva(common_price, warrant_price, warrant_xrs_price):
 
     # -> get price targets
     b = [a[price_target]*warrant_xrs_price for price_target in range(len(a))]
-
+    #print(b)
     # -> get common stock profits
     c = [(b[price_target]-common_price) for price_target in range(len(b))]
-    
+    #print(c)
     # -> get common stock ROI
     d = [(c[price_target]/common_price) for price_target in range(len(c))]
-
+    #print(d)
     # -> get warrant intrinsic values
     e = [(b[price_target] - warrant_xrs_price) for price_target in range(len(b))]
-
+    #print(e)
     # -> get warrant profits
     f = [(e[price_target] - warrant_price) for price_target in range(len(e))]
-
+    #print(f)
     # -> get warrant ROI
     g = [(f[price_target] / warrant_price) for price_target in range(len(f))]
-
+    #print(g)
     # -> get ROI Leverage
     h = [(g[price_target] / d[price_target]) for price_target in range(len(g))]
-    
+    #print(h)
     # calcuate Average Leverage - AevaLeva
     return (sum(h) / len(h))
 
-def main():
+def main(): 
     """
         Main entry point for script
         
@@ -90,7 +90,7 @@ def main():
     # set up numbers for Acasta Enterprises Inc market instruments 
     # AEF.WT stock warrant
     #==============================================================
-    warrant_symbol = 'SIL.WT'
+    warrant_symbol = 'AEF.WT'
     common_price = 8.88
     warrant_price = 1.20
     warrant_xrs_price = 11.50
