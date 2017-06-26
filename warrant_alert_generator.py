@@ -30,7 +30,7 @@ import csv
 # ---
 #-------------END GLOBAL VARIABLES ------------------------------------#
 
-def gen_alerts():
+def gen_alert():
     #def gen_alert_signal(warrant_symbol):
     """
        calculate a value that will indicate whether the warrant warrants further investigation
@@ -38,6 +38,8 @@ def gen_alerts():
        usage: gen_alert_signal('AEF.WT')
        note:  warrant symbol is unique
     """ 
+   
+    # ================================>> make this function available to Jupyter notebook to run calcs on each row of the DataFrame and 
     
     # define some key parameters
     # -------------------------------------------------------------
@@ -172,7 +174,7 @@ def main():
     
     #global current_file_date
     
-    gen_alerts()
+    gen_alert()
     
         
 if __name__ == '__main__':
