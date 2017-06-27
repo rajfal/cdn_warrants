@@ -76,7 +76,9 @@ def gen_avealeva(common_price, warrant_price, warrant_xrs_price):
     h = [(g[price_target] / d[price_target]) for price_target in range(len(g))]
     #print(h)
     # calcuate Average Leverage - AevaLeva
-    return (sum(h) / len(h))
+    avg_leverage = '{:.2f}'.format((sum(h) / len(h)))
+    print('--->' + avg_leverage)
+    return avg_leverage
 
 def main(): 
     """

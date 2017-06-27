@@ -26,19 +26,18 @@ import csv
 # ---
 #--------------------END CONSTANTS ------------------------------------#
 
-#-----------START GLOBAL VARIABLES ------------------------------------#
+#-----------START GLOBAL VARIABLES ------------------------------------# 
 # ---
-#-------------END GLOBAL VARIABLES ------------------------------------#
+#-------------END GLOBAL VARIABLES ------------------------------------# 
 
-def gen_alert():
-    #def gen_alert_signal(warrant_symbol):
+def gen_alert(leverage, timepricegain, warrantprice):
     """
        calculate a value that will indicate whether the warrant warrants further investigation
        any figure greater than 0.80 is a positive territory
-       usage: gen_alert_signal('AEF.WT')
+       usage: gen_alert(ds['leverage'], ds['time-price-gain'], ds['warrant']
        note:  warrant symbol is unique
     """ 
-   
+    
     # ================================>> make this function available to Jupyter notebook to run calcs on each row of the DataFrame and 
     
     # define some key parameters
@@ -49,28 +48,29 @@ def gen_alert():
     _p_WarrantPriceLevel = 0.22
     # -------------------------------------------------------------  
       
-    s = read_selection_csv()
+    #s = read_selection_csv()
     
-    for warrant in range(1, len(s)):
+    #for warrant in range(1, len(s)):
         
-        print(s[warrant][2])
+    #    print(s[warrant][2])
         #get_subsignal_leverage
-        l = get_subsignal_leverage(s[warrant][5])
+    #l = get_subsignal_leverage(s[warrant][5])
+    l = get_subsignal_leverage(leverage)
         #print(l)
         
         #get_subsignal_timepricegain
-        g = get_subsignal_timepricegain(s[warrant][12])
+    #g = get_subsignal_timepricegain(s[warrant][12])
+    g = get_subsignal_timepricegain(timepricegain)
         #print(g)
         
         #get_subsignal_warrantpricelevel
-        p = get_subsignal_warrantpricelevel(s[warrant][4])
+    #p = get_subsignal_warrantpricelevel(s[warrant][4])
+    p = get_subsignal_warrantpricelevel(warrantprice)
         #print(p)
         
-        alert = '{:.2f}'.format((l*_p_Leverage + g*_p_TimePriceGain + p*_p_WarrantPriceLevel)) 
+    alert = '{:.2f}'.format((l*_p_Leverage + g*_p_TimePriceGain + p*_p_WarrantPriceLevel)) 
         
-        print(alert)
-         
-    return 1
+    return alert
     
 def get_subsignal_leverage(leverage):
     """ 
@@ -163,21 +163,3 @@ def read_selection_csv():
         your_list = list(reader)
 
     return your_list
-
-def main():
-    """
-        Main entry point for script
-    """
-    
-    # play on a clean screen :) unless in tmux
-    os.system('clear')    
-    
-    #global current_file_date
-    
-    gen_alert()
-    
-        
-if __name__ == '__main__':
-    """report any processing error to the shell??
-    """
-    sys.exit(main())
