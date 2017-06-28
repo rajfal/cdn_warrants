@@ -75,9 +75,10 @@ def gen_avealeva(common_price, warrant_price, warrant_xrs_price):
     # -> get ROI Leverage
     h = [(g[price_target] / d[price_target]) for price_target in range(len(g))]
     #print(h)
+    
     # calcuate Average Leverage - AevaLeva
     avg_leverage = '{:.2f}'.format((sum(h) / len(h)))
-    print('--->' + avg_leverage)
+    #print('--->' + avg_leverage)
     return avg_leverage
 
 def main(): 
@@ -102,7 +103,7 @@ def main():
     
     print('Warrant symbol : ' + warrant_symbol)
     print('{:*^30}'.format(' end '))
-    print("Warrant AevaLeva: " + '{:.2f}'.format(avg_leverage) )
+    print("Warrant AevaLeva: " + str(avg_leverage) )
     print('{:*^30}'.format(' end '))
     
         

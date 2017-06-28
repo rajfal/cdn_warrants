@@ -163,3 +163,34 @@ def read_selection_csv():
         your_list = list(reader)
 
     return your_list
+
+def main(): 
+    """
+        Main entry point for script
+        
+    """
+    
+    # play on a clean screen :) unless in tmux
+    os.system('clear')    
+    
+    # set up numbers for Anon Enterprises Inc market instruments 
+    # ANN.WT stock warrant
+    #==============================================================
+    warrant_symbol = 'ANN.WT'
+    leverage = 5.8
+    warrant_price = 1.20
+    timeprice_gain = 0.07
+    #==============================================================
+    
+    alert = gen_alert(leverage, timeprice_gain, warrant_price)
+    
+    print('Warrant symbol : ' + warrant_symbol)
+    print('{:*^30}'.format(' end '))
+    print("Warrant Anon Ent: " + str(alert) )
+    print('{:*^30}'.format(' end '))
+    
+        
+if __name__ == '__main__':
+    """report any processing error to the shell??
+    """
+    sys.exit(main())
