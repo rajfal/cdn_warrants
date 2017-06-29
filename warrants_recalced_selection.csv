@@ -1,0 +1,9 @@
+company,symbol,stock,exercise-price,warrant,expiry-date,alert,avg-lvge,ACTION
+Acasta Enterprises Inc,AEF.WT,8.75,11.5,1.2,03/01/2022,0.88,4.18,investigate
+Kew Media Group Inc,KEW.WT,9.85,11.5,1.67,13/06/2023,0.89,3.01,investigate
+Manitok Energy Inc,MEI.WT,0.115,0.18,0.025,15/11/2021,0.98,2.36,investigate
+Osisko Gold Royalties Ltd,OR.WT,14.26,36.5,2.4,18/02/2022,0.79,3.09,wait
+Titan Medical Inc,TMD.WT.G,0.353,1.0,0.03,12/02/2021,0.93,6.32,investigate
+Titan Medical Inc,TMD.WT.H,0.353,1.2,0.035,31/03/2021,0.91,5.28,investigate
+Titan Medical Inc,TMD.WT.I,0.353,0.75,0.06,20/09/2021,0.95,3.11,investigate
+Trilogy Intl Partners Inc,TRL.WT,9.5,11.5,0.5,07/02/2022,0.89,12.78,investigate
